@@ -5,6 +5,8 @@ const db = require('./database/db');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
+
 
 // POST endpoint to onboard a new professional
 app.post('/api/professionals', (req, res) => {
