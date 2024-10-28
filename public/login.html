@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <div x-data="loginForm">
+                <form @submit.prevent="submitLogin">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" x-model="email" required><br>
+        
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" x-model="password" required><br>
+        
+                    <label for="role">Role:</label>
+                    <select id="role" x-model="role" required>
+                        <option value="admin">Admin</option>
+                        <option value="sme">Small and Micro Enterprise</option>
+                        <option value="professional">Talent/Professional</option>
+                    </select><br>
+        
+                    <button type="submit">Login</button>
+                </form>
+                <p x-text="message" style="padding: 10px;"></p>
+                <p>Don't have an account? <a href="register.html">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+   
+</body>
+</html>
