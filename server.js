@@ -76,8 +76,10 @@ app.post('/api/sme/onboard', upload.fields([
     }
 });
 
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 
 // Register new user
 app.post('/api/register', async (req, res) => {
