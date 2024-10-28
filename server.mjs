@@ -1,20 +1,29 @@
-const express = require('express');
-const cors = require('cors');
-const db = require('./database/db');
+import express from 'express';
+import cors from 'cors';
+import * as sqlite from 'sqlite';
+import sqlite3 from 'sqlite3';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+const  db = await sqlite.open({
+    filename:  './database/professionals.db',
+    driver:  sqlite3.Database
+});
+
+console.log('db initialized');
+
+await db.migrate();
 
 // POST endpoint to onboard a new professional
-app.post('/api/professionals', (req, res) => {
+app.post('/api/professionals', async function (req, res) {
     const { name, email, phone, skills, experience } = req.body;
     const sql = `INSERT INTO professionals (name, email, phone, skills, experience) VALUES (?, ?, ?, ?, ?)`;
     const params = [name, email, phone, skills, experience];
 
-    db.run(sql, params, function (err) {
+    await db.run(sql, params, function (err) {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -24,9 +33,9 @@ app.post('/api/professionals', (req, res) => {
 });
 
 // GET endpoint to retrieve all professionals
-app.get('/api/professionals', (req, res) => {
+app.get('/api/professionals', async function (req, res) {
     const sql = 'SELECT * FROM professionals';
-    db.all(sql, [], (err, rows) => {
+    await db.all(sql, [], (err, rows) => {
         if (err) {
             res.status(400).json({ error: err.message });
             return;
@@ -40,8 +49,10 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-const multer = require('multer');
-const path = require('path');
+// const multer = require('multer');
+import multer from 'multer';
+import path from 'path';
+// const path = require('path');
 
 // Configure storage for file uploads
 const storage = multer.diskStorage({
@@ -78,10 +89,12 @@ app.post('/api/sme/onboard', upload.fields([
     }
 });
 
-const bcryptjs = require('bcryptjs');
+/* const bcryptjs = require('bcryptjs');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
+const jwt = require('jsonwebtoken'); */
+import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken'
 
 // Register new user
 app.post('/api/register', async (req, res) => {
