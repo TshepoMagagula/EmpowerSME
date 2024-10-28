@@ -17,7 +17,7 @@ function onboardForm() {
             };
 
             try {
-                const response = await fetch('/api/professionals', {
+                const response = await fetch('https://empowersme.onrender.com/api/professionals', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -68,7 +68,7 @@ function onboardSMEForm() {
             formData.append('businessTaxNumber', this.businessTaxNumber);
             
             try {
-                const response = await fetch('/api/sme/onboard', {
+                const response = await fetch('https://empowersme.onrender.com/api/sme/onboard', {
                     method: 'POST',
                     body: formData,
                 });
@@ -101,7 +101,7 @@ function loginForm() {
             const data = { email: this.email, password: this.password };
 
             try {
-                const response = await fetch('/api/login', {
+                const response = await fetch('https://empowersme.onrender.com/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -141,7 +141,7 @@ function registerForm() {
             };
 
             try {
-                const response = await fetch('/api/register', {
+                const response = await fetch('https://empowersme.onrender.com/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
