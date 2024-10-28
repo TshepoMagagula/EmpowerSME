@@ -17,7 +17,7 @@ function onboardForm() {
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/professionals', {
+                const response = await fetch('/api/professionals', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -68,7 +68,7 @@ function onboardSMEForm() {
             formData.append('businessTaxNumber', this.businessTaxNumber);
             
             try {
-                const response = await fetch('http://localhost:5000/api/sme/onboard', {
+                const response = await fetch('/api/sme/onboard', {
                     method: 'POST',
                     body: formData,
                 });
@@ -101,7 +101,7 @@ function loginForm() {
             const data = { email: this.email, password: this.password };
 
             try {
-                const response = await fetch('http://localhost:5000/api/login', {
+                const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -141,7 +141,7 @@ function registerForm() {
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/register', {
+                const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
@@ -153,7 +153,7 @@ function registerForm() {
                     // Registration successful
                     this.message = 'Registration successful! You can now log in.';
                     // Optionally, redirect to login page
-                    window.location.href = 'login.html';
+                    window.location.href = 'index.html';
                 } else {
                     // Registration failed
                     this.message = result.error || 'Registration failed. Please try again.';
