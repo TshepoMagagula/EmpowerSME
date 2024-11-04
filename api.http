@@ -1,0 +1,33 @@
+POST http://localhost:5000/api/professionals
+Content-Type: application/json
+
+{
+    "name": "Tshepo Magagula", 
+    "email": "tshepomagagulatp11@gmail.com", 
+    "phone": "0722328618", 
+    "skills": "java, html, css, software development", 
+    "experience": 3
+}
+
+###
+GET http://localhost:5000/api/professionals
+
+###
+POST http://localhost:5000/api/register
+Content-Type: application/json
+
+{
+    "name": "Tshepo Magagula", 
+    "email": "tshepomagagulatp11@gmail.com",
+    "password": "Cr7Tp11_M", 
+    "role": "professional"
+}
+
+###
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "email": "tshepomagagulatp11@gmail.com",
+    "password": "Cr7Tp11_M"
+}

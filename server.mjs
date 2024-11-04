@@ -44,11 +44,6 @@ app.get('/api/professionals', async function (req, res) {
     });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
-
 // const multer = require('multer');
 import multer from 'multer';
 import path from 'path';
@@ -128,6 +123,11 @@ app.post('/api/login', async (req, res) => {
         console.error(error.message);
         res.status(500).json({ error: 'Failed to login' });
     }
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 
 

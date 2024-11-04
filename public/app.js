@@ -120,9 +120,16 @@ function loginForm() {
                 console.error('Error:', error);
                 this.message = 'Login failed. Please try again.';
             }
+        },
+
+        clearInputs() {
+            if (this.role) {
+                this.email = '';
+                this.password = '';
+            }
         }
     };
-};
+}
 
 function registerForm() {
     return {
