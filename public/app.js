@@ -4,34 +4,50 @@ function onboardForm() {
         email: '',
         phone: '',
         skills: '',
-        experience: null,
+        experience: '',
+        idDocument: null,
+        qualification: null,
+        matric: null,
         message: '',
 
+        handleFileUpload(event, field) {
+            this[field] = event.target.files[0];
+        },
+
         async submitForm() {
-            const data = {
-                name: this.name,
-                email: this.email,
-                phone: this.phone,
-                skills: this.skills,
-                experience: parseInt(this.experience),
-            };
+            const data = new FormData();
+            data.append('name', this.name);
+            data.append('email', this.email);
+            data.append('phone', this.phone);
+            data.append('skills', this.skills);
+            data.append('experience', this.experience);
+            data.append('idDocument', this.idDocument);
+            data.append('qualification', this.qualification);
+            data.append('matric', this.matric);
 
             try {
                 const response = await fetch('https://empowersme.onrender.com/api/professionals', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
+                   // headers: { 'Content-Type': 'application/json' },
+                    body: data
                 });
 
                 const result = await response.json();
-                this.message = result.message;
+                
+                if (result.success) {
+                    this.message = 'Professional onboarded successfully!';
+                } else {
+                    this.message = 'Failed to onboard professional. Please try again.';
+                }
 
-                // Clear form inputs after submission
                 this.name = '';
                 this.email = '';
                 this.phone = '';
                 this.skills = '';
-                this.experience = null;
+                this.experience = '';
+                this.idDocument = null;
+                this.qualification = null;
+                this.matric = null;
             } catch (error) {
                 console.error('Error:', error);
                 this.message = 'Error submitting the form. Please try again.';

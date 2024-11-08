@@ -17,21 +17,6 @@ console.log('db initialized');
 
 await db.migrate();
 
-// POST endpoint to onboard a new professional
-app.post('/api/professionals', async function (req, res) {
-    const { name, email, phone, skills, experience } = req.body;
-    const sql = `INSERT INTO professionals (name, email, phone, skills, experience) VALUES (?, ?, ?, ?, ?)`;
-    const params = [name, email, phone, skills, experience];
-
-    await db.run(sql, params, function (err) {
-        if (err) {
-            res.status(400).json({ error: err.message });
-            return;
-        }
-        res.json({ message: 'Professional onboarded successfully!', id: this.lastID });
-    });
-});
-
 // GET endpoint to retrieve all professionals
 app.get('/api/professionals', async function (req, res) {
     const sql = 'SELECT * FROM professionals';
@@ -44,15 +29,12 @@ app.get('/api/professionals', async function (req, res) {
     });
 });
 
-// const multer = require('multer');
 import multer from 'multer';
 import path from 'path';
-// const path = require('path');
 
-// Configure storage for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Ensure the 'uploads' directory exists
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
         cb(null, `${Date.now()}_${file.originalname}`);
@@ -84,9 +66,31 @@ app.post('/api/sme/onboard', upload.fields([
     }
 });
 
-/* const bcryptjs = require('bcryptjs');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken'); */
+// POST endpoint to onboard a new professional
+app.post('/api/professionals', upload.fields([
+    { name: 'idDocument', maxCount: 1 },
+    { name: 'qualification', maxCount: 1 },
+    { name: 'matric', maxCount: 1 }
+]), async function (req, res) {
+    const { name, email, phone, skills, experience } = req.body;
+   
+    const idDocumentPath = req.files['idDocument'] ? req.files['idDocument'][0].path : null;
+    const qualificationPath = req.files['qualification'] ? req.files['qualification'][0].path : null;
+    const matricPath = req.files['matric'] ? req.files['matric'][0].path : null;
+
+    const sql = `INSERT INTO professionals (name, email, phone, skills, experience, idDocument, qualification, matric) VALUES (?, ?, ?, ?, ?)`;
+    const params = [name, email, phone, skills, experience, idDocumentPath, qualificationPath, matricPath];
+
+    await db.run(sql, params, function (err) {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        } else {
+            res.json({ message: 'Professional onboarded successfully!', id: this.lastID });
+        }
+    });
+});
+
 import bcryptjs from 'bcryptjs';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
