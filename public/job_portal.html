@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Posting and Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Recruiter Job Portal</h1>
+
+            <!-- Job Posting Form -->
+            <div x-data="jobPostingForm">
+                <h2>Post a Job</h2>
+                <form @submit.prevent="submitJobPost">
+                    <label for="jobTitle">Job Title:</label>
+                    <input type="text" id="jobTitle" x-model="jobTitle" required><br>
+
+                    <label for="jobDescription">Job Description:</label>
+                    <textarea id="jobDescription" x-model="jobDescription" required></textarea><br>
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" x-model="location"><br>
+
+                    <label for="requirements">Requirements:</label>
+                    <input type="text" id="requirements" x-model="requirements"><br>
+
+                    <label for="salary">Salary:</label>
+                    <input type="number" id="salary" x-model="salary"><br>
+
+                    <button type="submit">Post Job</button>
+                    <p x-text="jobMessage"></p>
+                </form>
+            </div>
+
+            <!-- Professional Search Form -->
+            <div x-data="professionalSearch">
+                <h2>Search for Professionals</h2>
+                <form @submit.prevent="searchProfessionals">
+                    <label for="searchSkills">Skills:</label>
+                    <input type="text" id="searchSkills" x-model="searchSkills"><br>
+
+                    <label for="minExperience">Minimum Experience (years):</label>
+                    <input type="number" id="minExperience" x-model="minExperience"><br>
+
+                    <button type="submit">Search</button>
+                </form>
+
+                <h3>Results:</h3>
+                <ul>
+                    <template x-for="professional in professionals" :key="professional.id">
+                        <li>
+                            <strong x-text="professional.name"></strong><br>
+                            <span x-text="professional.skills"></span> | 
+                            <span x-text="professional.experience + ' years'"></span><br>
+                            <span x-text="professional.contactEmail"></span><br><br>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

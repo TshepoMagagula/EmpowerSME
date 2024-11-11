@@ -14,18 +14,18 @@
             <h2>Login</h2>
             <div x-data="loginForm">
                 <form @submit.prevent="submitLogin">
+                    <label for="role">Role:</label>
+                    <select id="role" x-model="role" @change="clearInputs" required>
+                        <!-- <option value="admin">Admin</option> -->
+                        <option value="sme">Small and Micro Enterprise</option>
+                        <option value="professional">Talent/Professional</option>
+                    </select><br>
+
                     <label for="email">Email:</label>
                     <input type="email" id="email" x-model="email" required><br>
         
                     <label for="password">Password:</label>
                     <input type="password" id="password" x-model="password" required><br>
-        
-                    <label for="role">Role:</label>
-                    <select id="role" x-model="role" required>
-                        <option value="admin">Admin</option>
-                        <option value="sme">Small and Micro Enterprise</option>
-                        <option value="professional">Talent/Professional</option>
-                    </select><br>
         
                     <button type="submit">Login</button>
                 </form>

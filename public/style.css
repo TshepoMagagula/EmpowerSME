@@ -20,12 +20,14 @@ body {
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
+    height: 600px;
+    overflow-y: auto;
 }
 
 h2 {
@@ -33,7 +35,7 @@ h2 {
     margin-bottom: 20px;
 }
 
-input, select, button {
+input, select, button, textarea {
     width: 100%;
     padding: 10px;
     margin: 10px 0;

@@ -169,6 +169,14 @@ function registerForm() {
                 console.error('Error:', error);
                 this.message = 'An error occurred. Please try again.';
             }
+        },
+
+        clearInputs() {
+            if (this.role) {
+                this.name = '';
+                this.email = '';
+                this.password = '';
+            }
         }
     };
 };
