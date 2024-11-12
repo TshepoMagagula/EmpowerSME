@@ -26,7 +26,7 @@ function onboardForm() {
             data.append('matric', this.matric);
 
             try {
-                const response = await fetch('http://localhost:5000/api/professionals', {
+                const response = await fetch('https://empowersme.onrender.com/api/professionals', {
                     method: 'POST',
                     body: data,
                 });
@@ -88,7 +88,7 @@ function onboardSMEForm() {
             formData.append('businessTaxNumber', this.businessTaxNumber);
             
             try {
-                const response = await fetch('http://localhost:5000/api/sme/onboard', {
+                const response = await fetch('https://empowersme.onrender.com/api/sme/onboard', {
                     method: 'POST',
                     body: formData,
                 });
@@ -223,7 +223,7 @@ function jobPostingForm() {
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/post-job', {
+                const response = await fetch('https://empowersme.onrender.com/api/post-job', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(jobData)
@@ -247,7 +247,7 @@ function professionalSearch() {
 
         async searchProfessionals() {
             try {
-                const response = await fetch(`http://localhost:5000/api/search-professionals?skills=${this.searchSkills}&experience=${this.minExperience}`);
+                const response = await fetch(`https://empowersme.onrender.com/api/search-professionals?skills=${this.searchSkills}&experience=${this.minExperience}`);
                 const results = await response.json();
                 this.professionals = results;
             } catch (error) {
@@ -265,7 +265,7 @@ function jobSearch() {
         
         async fetchJobs() {
             try {
-                const response = await fetch(`http://localhost:5000/api/jobs/search?query=${this.searchQuery}`);
+                const response = await fetch(`https://empowersme.onrender.com/api/jobs/search?query=${this.searchQuery}`);
                 const data = await response.json();
                 if (data.success) {
                     this.jobs = data.jobs;
