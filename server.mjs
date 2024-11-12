@@ -129,6 +129,41 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// Job Posting Endpoint
+app.post('/api/post-job', (req, res) => {
+    const { title, description, location, requirements, salary } = req.body;
+    const sql = `INSERT INTO jobs (title, description, location, requirements, salary) VALUES (?, ?, ?, ?, ?)`;
+    const params = [title, description, location, requirements, salary];
+
+    db.run(sql, params, function (err) {
+        if (err) {
+            console.error('Error posting job:', err);
+            res.status(500).json({ message: 'Failed to post job.' });
+        } else {
+            res.json({ message: 'Job posted successfully', jobId: this.lastID });
+        }
+    });
+});
+
+//search professionals endpoint
+app.get('/api/search-professionals', (req, res) => {
+    const { skills, experience } = req.query;
+    const sql = `
+        SELECT * FROM professionals 
+        WHERE skills LIKE ? AND experience >= ?
+    `;
+    const params = [`%${skills}%`, experience || 0];
+
+    db.all(sql, params, (err, rows) => {
+        if (err) {
+            console.error('Error fetching professionals:', err);
+            res.status(500).json([]);
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

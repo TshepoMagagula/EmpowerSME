@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Search for Jobs</h1>
+
+            <div x-data="jobSearch">
+                <form @submit.prevent="searchJobs">
+                    <label for="keyword">Keyword:</label>
+                    <input type="text" id="keyword" x-model="keyword" placeholder="e.g., Developer, Designer"><br>
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" x-model="location" placeholder="e.g., Johannesburg"><br>
+
+                    <label for="jobType">Job Type:</label>
+                    <select id="jobType" x-model="jobType">
+                        <option value="">Any</option>
+                        <option value="Full-Time">Full-Time</option>
+                        <option value="Part-Time">Part-Time</option>
+                        <option value="Contract">Contract</option>
+                    </select><br>
+
+                    <button type="submit">Search</button>
+                </form>
+
+                <h2>Job Listings</h2>
+                <div x-show="jobs.length === 0">No jobs found.</div>
+                <ul>
+                    <template x-for="job in jobs" :key="job.id">
+                        <li>
+                            <h3 x-text="job.title"></h3>
+                            <p x-text="job.companyName"></p>
+                            <p x-text="job.location"></p>
+                            <p x-text="job.description"></p>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

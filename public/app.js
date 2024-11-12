@@ -197,3 +197,88 @@ function registerForm() {
     };
 };
 
+function jobPostingForm() {
+    return {
+        jobTitle: '',
+        jobDescription: '',
+        location: '',
+        requirements: '',
+        salary: '',
+        jobMessage: '',
+
+        async submitJobPost() {
+            const jobData = {
+                title: this.jobTitle,
+                description: this.jobDescription,
+                location: this.location,
+                requirements: this.requirements,
+                salary: this.salary
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/post-job', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(jobData)
+                });
+
+                const result = await response.json();
+                this.jobMessage = result.message;
+            } catch (error) {
+                console.error('Error posting job:', error);
+                this.jobMessage = 'Failed to post job. Please try again.';
+            }
+        }
+    };
+}
+
+function professionalSearch() {
+    return {
+        searchSkills: '',
+        minExperience: 0,
+        professionals: [],
+
+        async searchProfessionals() {
+            try {
+                const response = await fetch(`http://localhost:5000/api/search-professionals?skills=${this.searchSkills}&experience=${this.minExperience}`);
+                const results = await response.json();
+                this.professionals = results;
+            } catch (error) {
+                console.error('Error searching professionals:', error);
+            }
+        }
+    };
+}
+
+function jobSearch() {
+    return {
+        keyword: '',
+        location: '',
+        jobType: '',
+        jobs: [],
+
+        async searchJobs() {
+            const query = new URLSearchParams({
+                keyword: this.keyword,
+                location: this.location,
+                jobType: this.jobType,
+            });
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/jobs?${query.toString()}`);
+                if (response.ok) {
+                    this.jobs = await response.json();
+                } else {
+                    console.error('Failed to fetch jobs');
+                    this.jobs = [];
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                this.jobs = [];
+            }
+        }
+    };
+}
+
+
+
