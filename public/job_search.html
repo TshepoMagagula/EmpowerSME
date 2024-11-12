@@ -10,42 +10,27 @@
 <body>
     <div class="container">
         <div class="form-container">
-            <h1>Search for Jobs</h1>
-
-            <div x-data="jobSearch">
-                <form @submit.prevent="searchJobs">
-                    <label for="keyword">Keyword:</label>
-                    <input type="text" id="keyword" x-model="keyword" placeholder="e.g., Developer, Designer"><br>
-
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" x-model="location" placeholder="e.g., Johannesburg"><br>
-
-                    <label for="jobType">Job Type:</label>
-                    <select id="jobType" x-model="jobType">
-                        <option value="">Any</option>
-                        <option value="Full-Time">Full-Time</option>
-                        <option value="Part-Time">Part-Time</option>
-                        <option value="Contract">Contract</option>
-                    </select><br>
-
-                    <button type="submit">Search</button>
-                </form>
-
-                <h2>Job Listings</h2>
-                <div x-show="jobs.length === 0">No jobs found.</div>
+            <h1>Job Search</h1>
+    
+            <div x-data="jobSearch()">
+                <h2>Find Your Next Opportunity</h2>
+                
+                <input type="text" x-model="searchQuery" placeholder="Search jobs by title or keyword" />
+                <button @click="fetchJobs()">Search</button>
+                
+                <div x-text="message" style="color: red; margin-top: 10px;"></div>
+                
                 <ul>
                     <template x-for="job in jobs" :key="job.id">
                         <li>
                             <h3 x-text="job.title"></h3>
-                            <p x-text="job.companyName"></p>
-                            <p x-text="job.location"></p>
-                            <p x-text="job.description"></p>
+                            <p><strong>Location:</strong> <span x-text="job.location"></span></p>
+                            <p><strong>Description:</strong> <span x-text="job.description"></span></p>
+                            <p><strong>Requirements:</strong> <span x-text="job.requirements"></span></p>
                         </li>
                     </template>
                 </ul>
             </div>
-        </div>
-    </div>
 
     <script src="app.js"></script>
 </body>

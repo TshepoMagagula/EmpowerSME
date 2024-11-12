@@ -1,7 +1,7 @@
 function onboardForm() {
     return {
         name: '',
-        email: '',
+        /* email: '', */
         phone: '',
         skills: '',
         experience: '',
@@ -17,7 +17,7 @@ function onboardForm() {
         async submitForm() {
             const data = new FormData();
             data.append('name', this.name);
-            data.append('email', this.email);
+            /* data.append('email', this.email); */
             data.append('phone', this.phone);
             data.append('skills', this.skills);
             data.append('experience', this.experience);
@@ -26,10 +26,9 @@ function onboardForm() {
             data.append('matric', this.matric);
 
             try {
-                const response = await fetch('https://empowersme.onrender.com/api/professionals', {
+                const response = await fetch('http://localhost:5000/api/professionals', {
                     method: 'POST',
-                   // headers: { 'Content-Type': 'application/json' },
-                    body: data
+                    body: data,
                 });
 
                 const result = await response.json();
@@ -40,14 +39,19 @@ function onboardForm() {
                     this.message = 'Failed to onboard professional. Please try again.';
                 }
 
-                this.name = '';
-                this.email = '';
-                this.phone = '';
-                this.skills = '';
-                this.experience = '';
-                this.idDocument = null;
-                this.qualification = null;
-                this.matric = null;
+                setTimeout(() => {
+                    this.name = '';
+                    /* this.email = ''; */
+                    this.phone = '';
+                    this.skills = '';
+                    this.experience = '';
+                    this.idDocument = null;
+                    this.qualification = null;
+                    this.matric = null;
+                    window.location.href = 'job_search.html';
+                }, 5000);
+
+             
             } catch (error) {
                 console.error('Error:', error);
                 this.message = 'Error submitting the form. Please try again.';
@@ -62,7 +66,7 @@ function onboardSMEForm() {
         industry: '',
         address: '',
         contactPerson: '',
-        contactEmail: '',
+        /* contactEmail: '', */
         contactPhone: '',
         companyRegistration: null,
         businessTaxNumber: null,
@@ -78,26 +82,29 @@ function onboardSMEForm() {
             formData.append('industry', this.industry);
             formData.append('address', this.address);
             formData.append('contactPerson', this.contactPerson);
-            formData.append('contactEmail', this.contactEmail);
+            /* formData.append('contactEmail', this.contactEmail); */
             formData.append('contactPhone', this.contactPhone);
             formData.append('companyRegistration', this.companyRegistration);
             formData.append('businessTaxNumber', this.businessTaxNumber);
             
             try {
-                const response = await fetch('https://empowersme.onrender.com/api/sme/onboard', {
+                const response = await fetch('http://localhost:5000/api/sme/onboard', {
                     method: 'POST',
                     body: formData,
                 });
                 const result = await response.json();
                 this.smeMessage = result.message;
 
-                // Clear form inputs after submission
-                this.smeName = '';
-                this.industry = '';
-                this.address = '';
-                this.contactPerson = '';
-                this.contactEmail = '';
-                this.contactPhone = '';
+                setTimeout(() => {
+                    this.smeName = '';
+                    this.industry = '';
+                    this.address = '';
+                    this.contactPerson = '';
+                    /* this.contactEmail = ''; */
+                    this.contactPhone = '';
+                    window.location.href = 'job_portal.html';
+                }, 5000);
+
             } catch (error) {
                 console.error('Error:', error);
                 this.smeMessage = 'Error submitting the SME form. Please try again.';
@@ -252,29 +259,23 @@ function professionalSearch() {
 
 function jobSearch() {
     return {
-        keyword: '',
-        location: '',
-        jobType: '',
+        searchQuery: '',
         jobs: [],
-
-        async searchJobs() {
-            const query = new URLSearchParams({
-                keyword: this.keyword,
-                location: this.location,
-                jobType: this.jobType,
-            });
-
+        message: '',
+        
+        async fetchJobs() {
             try {
-                const response = await fetch(`http://localhost:5000/api/jobs?${query.toString()}`);
-                if (response.ok) {
-                    this.jobs = await response.json();
+                const response = await fetch(`http://localhost:5000/api/jobs/search?query=${this.searchQuery}`);
+                const data = await response.json();
+                if (data.success) {
+                    this.jobs = data.jobs;
+                    this.message = '';
                 } else {
-                    console.error('Failed to fetch jobs');
-                    this.jobs = [];
+                    this.message = 'No jobs found for your search query.';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                this.jobs = [];
+                console.error(error);
+                this.message = 'An error occurred while searching for jobs. Please try again.';
             }
         }
     };

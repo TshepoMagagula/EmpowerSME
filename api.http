@@ -33,3 +33,45 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:5000/api/sme/onboard
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST http://localhost:5000/api/professionals
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST http://localhost:5000/api/post-job
+Content-Type: application/json
+
+{
+    "title": "Mechanical engineer", 
+    "description": "we are looking for an experience engineer", 
+    "location": "Johannesburg", 
+    "requirements": "knowledge of combustion engine", 
+    "salary": 30000
+}
+
+###
+POST http://localhost:5000/api/search-professionals
+Content-Type: application/json
+
+{
+
+}
+
+###
+POST http://localhost:5000/api/jobs/search
+Content-Type: application/json
+
+{
+    "searchQuery": "Software Engineer"
+}
